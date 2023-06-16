@@ -2,14 +2,61 @@
 
 {% block content %}
 <body>
+<section class="bg-gray-900">
+    <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
+        <a href="#" class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
+            
+            Welcome to  <svg class="w-8 h-8 fill-white" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="white">
+				<path d="M11 17a1 1 0 001.447.894l4-2A1 1 0 0017 15V9.236a1 1 0 00-1.447-.894l-4 2a1 1 0 00-.553.894V17zM15.211 6.276a1 1 0 000-1.788l-4.764-2.382a1 1 0 00-.894 0L4.789 4.488a1 1 0 000 1.788l4.764 2.382a1 1 0 00.894 0l4.764-2.382zM4.447 8.342A1 1 0 003 9.236V15a1 1 0 00.553.894l4 2A1 1 0 009 17v-5.764a1 1 0 00-.553-.894l-4-2z" />
+			</svg> trackr.    
+        </a>
+        <div class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+            <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+                <h1 class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
+                    Create your account
+                </h1>
+                <form method="post" class="space-y-4 md:space-y-6" action="#">
+                    {% csrf_token %}
+                    <div>
+                        {% for field in form.first_name%}
+                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">First Name</label>
+                         {{field}}
+                        {% endfor %}
+                    </div>
+                    <div>
+                        {% for field in form.last_name %}
+                        <label class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Last Name</label>
+                        {{field}}
+                        {% endfor %}
+                    </div>
+                    
+                    <div>
+                        {% for field in form.email%}
+                        <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Your email</label>
+                        {{field}}
+                        {% endfor %}
+                    </div>
+                    <div>
+                        {% for field in form.password1 %}
+                        <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Password</label>
+                        {{field}}
+                        {% endfor %}
+                    <div>
+                        {% for field in form.password2 %}
+                        <label for="confirm-password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirm password</label>
+                        {{field}}
+                        {% endfor%}
+                    </div>
+                
+                    <button method="POST" type="submit" class="w-full text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">Create an account</button>
+                    <p class="text-sm font-light text-gray-500 dark:text-gray-400">
+                        Already have an account? <a href="#" class="font-medium text-primary-600 hover:underline dark:text-primary-500">Login here</a>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+  </section>
 
-    <h1>Welcome to trackr.</h1>
-    <h2>Please fill out the following information to get started.</h2>
-    <form method="POST">
-        {% csrf_token %}
-    
-        {{ form }}
-    <button method="POST" type="submit">Sign Up</button>
-</form>
 </body>
 {% endblock %}

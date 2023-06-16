@@ -21,4 +21,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('app/', include('core.urls'), name='app'),
     path('', RedirectView.as_view(url='app/login', permanent=False)),
+    path("__reload__/", include("django_browser_reload.urls")), # For css auto reload
 ]
