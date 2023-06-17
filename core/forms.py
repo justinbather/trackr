@@ -5,7 +5,7 @@ from django.contrib.auth.forms import UserCreationForm, UserChangeForm, Authenti
 from django.contrib.auth.forms import User
 from django.utils.translation import gettext_lazy as _
 
-from .models import User
+from .models import User, Team
 
 class CustomUserCreationForm(UserCreationForm):
     email = forms.CharField(max_length=100, required=True,
@@ -57,3 +57,12 @@ class UserForm(forms.ModelForm):
             password = self.cleaned_data.get('password')
             if not authenticate(email=email, password=password):
                 raise forms.ValidationError('Invalid Login')
+
+
+class TeamCreationForm(ModelForm):
+    team_name = forms.TextInput()
+
+
+    class Meta:
+        model = Team
+        fields = ('team_name', 'team_leader')

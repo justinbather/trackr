@@ -73,3 +73,22 @@ def profile(request):
 def dashboard(request):
     user = request.user
     return render(request, 'dashboard.html', {'first_name':user.first_name})
+
+def create_team(request):
+    if request.user.is_authenticated:
+        user = models.User.objects.get(id=request.user.id)
+        form = forms.TeamCreationForm(request.POST)
+
+        
+        if request.POST:
+            print(form.errors)
+            if form.is_valid():
+                """print("Form valid")
+                form = form.save(commit=False)
+                form.team_leader = user.id"""
+                form.save()
+                return redirect('dashboard')
+        return render(request, 'create_team.html', {'form':form })
+    return redirect('login')
+
+

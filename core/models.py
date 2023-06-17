@@ -26,3 +26,16 @@ class User(AbstractUser):
     def __str__(self):
         return self.email
     
+class Team(models.Model):
+
+    team_name = models.CharField(max_length=20)
+    team_leader = models.ForeignKey(User, on_delete=models.CASCADE, related_name='team_leader')
+    member = models.ForeignKey(User, on_delete=models.CASCADE, related_name='team_member', null=True, blank=True)
+    productivity_goal = models.IntegerField(blank=True, null=True)
+    productivity_score = models.IntegerField(blank=True, null=True)
+
+    def __str__(self):
+        return self.team_name
+    
+
+
