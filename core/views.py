@@ -83,12 +83,59 @@ def create_team(request):
         if request.POST:
             print(form.errors)
             if form.is_valid():
-                """print("Form valid")
                 form = form.save(commit=False)
-                form.team_leader = user.id"""
+                form.team_leader = user
                 form.save()
                 return redirect('dashboard')
         return render(request, 'create_team.html', {'form':form })
     return redirect('login')
+
+def teams(request):
+    if request.user.is_authenticated:
+        user = models.User.objects.get(id=request.user.id)
+
+        #Query DB for user owned teams to display
+        owned_teams = models.Team.objects.filter(team_leader=user)
+        
+        #Query DB for user participating in team to display
+        participating_teams = models.Team.objects.filter(member=user)
+
+        
+            
+            
+        context = {
+            'participating_teams': participating_teams, 'owned_teams': owned_teams,
+        }
+
+        return render(request, 'teams.html', context)
+    
+    else:
+        return redirect('login')
+    
+
+def team_dashboard(request, team_id):
+    if request.user.is_authenticated:
+        team = models.Team.objects.get(id=team_id)
+
+        return render(request, "team_dashboard.html", {'team':team})
+    
+    return redirect('login')
+
+def all_owned_teams(request):
+    if request.user.is_authenticated:
+        user = models.User.objects.get(id=request.user.id)
+        owned_teams = models.Team.objects.filter(team_leader=user)
+
+        return render(request, "all_owned_teams.html", {'owned_teams':owned_teams})
+    return redirect('login')
+
+        
+
+
+                                                          
+
+
+
+
 
 
