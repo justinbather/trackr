@@ -12,6 +12,7 @@ urlpatterns = [
     path('create_team/', views.create_team, name='create_team'),
     path('teams/', views.teams, name='teams'),
     path('teams/dashboard/<int:team_id>', views.team_dashboard, name='team_dashboard'),
+    path('teams/dashboard/invite_member/<int:team_id>/<int:invited_user_id>', views.invite_team_member, name='invite_team_member'),
     path('teams/owned', views.all_owned_teams, name='all_owned_teams'),
     
 

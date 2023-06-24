@@ -118,13 +118,37 @@ def team_dashboard(request, team_id):
     if request.user.is_authenticated:
         team = models.Team.objects.get(id=team_id)
 
+        #grabbing search form for user lookup and invite
         if "search" in request.GET:
             query = request.GET.get('search')
+            # Prevents empty query from returning all users
             if query != "":
                 user_search_results = models.User.objects.filter(email__contains=query)
-
                 return render(request, "team_dashboard.html", {'team':team, 'user_search_results': user_search_results})
+        if request.POST:
+            print(request.POST.get('id'))
+            if "invite_user" in request.POST:
+                invited_user = request.POST.get('id')
+                print(invited_user)
+        
         return render(request, "team_dashboard.html", {'team':team})
+    
+    return redirect('login')
+
+def invite_team_member(request, team_id, invited_user_id): # Could add an additional layer of auth using owner id and making sure the owner is sending the req
+    if request.user.is_authenticated:
+        team = models.Team.objects.get(id=team_id)
+        invited_user = models.User.objects.get(id=invited_user_id)
+        # will need error catching
+        try:
+            object = models.TeamMember.objects.get(team=team, member=invited_user)
+            # return message that user is already in the team
+            return redirect('team_dashboard', team_id)
+        except ObjectDoesNotExist:
+            models.TeamMember.objects.create(team=team, member=invited_user)
+            return redirect('team_dashboard', team_id)
+        #add success message here
+
     return redirect('login')
 
 def all_owned_teams(request):
