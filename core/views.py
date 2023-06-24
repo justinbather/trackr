@@ -98,7 +98,8 @@ def teams(request):
         owned_teams = models.Team.objects.filter(team_leader=user)
         
         #Query DB for user participating in team to display
-        participating_teams = models.Team.objects.filter(member=user)
+        participating_teams = models.Team.objects.filter(teammember__member=user)
+        print(participating_teams)
 
         
             
@@ -117,8 +118,13 @@ def team_dashboard(request, team_id):
     if request.user.is_authenticated:
         team = models.Team.objects.get(id=team_id)
 
+        if "search" in request.GET:
+            query = request.GET.get('search')
+            if query != "":
+                user_search_results = models.User.objects.filter(email__contains=query)
+
+                return render(request, "team_dashboard.html", {'team':team, 'user_search_results': user_search_results})
         return render(request, "team_dashboard.html", {'team':team})
-    
     return redirect('login')
 
 def all_owned_teams(request):

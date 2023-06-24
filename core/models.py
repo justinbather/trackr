@@ -26,16 +26,61 @@ class User(AbstractUser):
     def __str__(self):
         return self.email
     
+
+
+
+    
 class Team(models.Model):
 
     team_name = models.CharField(max_length=20)
     team_leader = models.ForeignKey(User, on_delete=models.CASCADE, related_name='team_leader')
-    member = models.ForeignKey(User, on_delete=models.CASCADE, related_name='team_member', null=True, blank=True)
     productivity_goal = models.IntegerField(blank=True, null=True)
     productivity_score = models.IntegerField(blank=True, null=True)
 
     def __str__(self):
         return self.team_name
+    
+
+class TeamMember(models.Model):
+    team = models.ForeignKey(Team, on_delete=models.CASCADE)
+    member = models.ForeignKey(User, on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.member.first_name
+
+
+    
+class Task(models.Model):
+
+    #Importance Choices
+
+    URGENT = 'Urgent'
+    HIGH = 'High'
+    MEDIUM = 'Medium'
+    LOW = 'Low'
+
+    IMPORTANCE_CHOICES = [
+        (URGENT, _('Urgent')),
+        (HIGH, _('High')),
+        (MEDIUM, _('Medium')),
+        (LOW, _('Low')),
+    ]
+
+
+    team = models.ForeignKey(Team, on_delete=models.CASCADE)
+    creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name='creator')
+    assignee = models.ForeignKey(User, on_delete=models.CASCADE, related_name='assignee')
+    due_date = models.DateField()
+    importance = models.CharField(choices=IMPORTANCE_CHOICES, max_length=10)
+    description = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.description
+    
+
+        
+        
+
     
 
 

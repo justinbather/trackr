@@ -51,9 +51,11 @@
                 </h1>
                 {% if team in participating_teams %}
                     {% for team in participating_teams|slice:3 %}
-                        <button method="POST" type="submit" name="{{team_id}}" class="w-full text-white text-center font-medium rounded-lg text-sm border-sky-600 px-5 py-2.5">{{team_name}}</button>
+                    <a href="{% url 'team_dashboard' team.id%}" class="space-y-4">
+                        <button class="w-full text-white text-center font-medium rounded-lg text-sm border-sky-600 px-5 py-2.5">{{team.team_name}}</button>
+                    </a>
                     {% endfor %}
-                {%else %}
+                {% else %}
                 <h2 class="text-l font-medium text-center text-white">You aren't a member of a team yet.</h2>
                 
 
