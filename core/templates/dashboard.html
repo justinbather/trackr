@@ -1,14 +1,28 @@
-{% extends 'base.html' %}
-
-
-
-{% block content %}
-
-{% include 'navbar.html' %}
-<div class="flex flex-col w-screen h-50 overflow-hidden">
-<h1 class="flex flex-col text-center justify-center text-white font-bold text-2xl py-8">Welcome back, {{first_name}}.</h1>
-
+{% extends 'base.html' %} {% block content %} {% include 'navbar.html' %}
+<div class="flex flex-col w-screen overflow-hidden p-0">
+  <h1
+    class="flex flex-col text-center justify-center text-white font-bold text-2xl py-8"
+  >
+    Welcome back, {{first_name}}.
+  </h1>
 </div>
 
-
+<!--
+<section class="flex flex-col w-screen h-screen">
+  <div class="flex flex-row text-white h-screen">
+    <div class="w-full border border-gray-700"></div>
+    <div
+      class="w-full border border-gray-700 flex flex-col text-center justify-top text-white font-bold text-2xl"
+    >
+      <h1>Welcome back, {{first_name}}.</h1>
+    </div>
+    <div class="w-full border border-gray-700"></div>
+  </div>
+  <div class="flex flex-row text-white h-screen">
+    <div class="w-full border border-gray-700"></div>
+    <div class="w-full border border-gray-700"></div>
+    <div class="w-full border border-gray-700"></div>
+  </div>
+</section>
+-->
 {% endblock %}
