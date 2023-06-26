@@ -3,7 +3,7 @@ from django.contrib.auth.admin import UserAdmin
 
 from .forms import CustomUserChangeForm, CustomUserCreationForm
 
-from .models import User, Team
+from .models import User, Team, Task, TeamGoal
 
 # Register your models here.
 class CustomUserAdmin(UserAdmin):
@@ -34,3 +34,7 @@ class CustomUserAdmin(UserAdmin):
 
 admin.site.register(User)
 admin.site.register(Team)
+admin.site.register(Task)
+admin.site.register(TeamGoal)
+
+

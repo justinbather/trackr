@@ -120,6 +120,17 @@ def team_dashboard(request, team_id):
         team = models.Team.objects.get(id=team_id)
         team_members = models.TeamMember.objects.filter(team=team)
 
+        task_list = models.Task.objects.filter(team=team)
+        team_score = models.Task.objects.filter(team=team, completed=True).count()
+        try:
+            team_goal = models.TeamGoal.objects.get(team=team)
+            productivity = round(team_score / team_goal.goal * 100)
+        except ObjectDoesNotExist:
+            team_goal = "None"
+            productivity = "A productivity score can only be calculated when a goal is created"
+        team_score = models.Task.objects.filter(team=team, completed=True).count()
+        
+
         # grabbing search form for user lookup and invite
         if "search" in request.GET:
             query = request.GET.get("search")
@@ -142,10 +153,16 @@ def team_dashboard(request, team_id):
                 invited_user = request.POST.get("id")
                 print(invited_user)
 
+        context = {
+            "team": team, "user": request.user, 
+            "team_members": team_members, 'task_list':task_list,
+            'team_goal':team_goal, 'team_score':team_score, 'productivity':productivity
+        }
+
         return render(
             request,
             "team_dashboard.html",
-            {"team": team, "user": request.user, "team_members": team_members},
+            context,
         )
 
     return redirect("login")
